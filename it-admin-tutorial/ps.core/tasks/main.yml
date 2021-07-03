@@ -1,0 +1,8 @@
+---
+# tasks file for ps.core
+
+  - name: Run PowerShell Core script
+    command: pwsh /home/it-administrator/it-admin-tutorial/vcsa_example.ps1
+    ignore_errors: false
+    changed_when: false
+    register: powershell_output

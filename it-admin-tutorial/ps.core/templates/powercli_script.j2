@@ -1,0 +1,3 @@
+Set-PowerCLIConfiguration -ParticipateInCeip $false -InvalidCertificateAction Ignore -Confirm:$false
+Connect-VIServer -Server {{ vcenter_fqdn }} -User {{ vc_username }} -password {{ vc_password }}
+Get-VM -Name {{ inventory_hostname }} | Invoke-VMScript -vm {{ inventory_hostname }} -GuestUser {{ ansible_ssh_user }} -GuestPassword {{ ansible_ssh_pass }} -scriptText 'ifconfig'

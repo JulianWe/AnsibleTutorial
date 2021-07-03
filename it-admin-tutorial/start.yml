@@ -1,0 +1,54 @@
+---
+- name: call ansible roles 
+
+  hosts: vms 
+
+  connection: local 
+
+  become_user: root 
+
+ 
+
+  vars: 
+
+    - vc_username: administrator@vsphere.local 
+
+    - vc_password: VMware1! 
+
+    - vcenter_fqdn: vc-1.vdi.sclabs.net 
+
+    - ansible_ssh_user: "it-administrator" 
+
+    - ansible_ssh_pass: "Administrator1!" 
+
+    - domain: "vdi.sclabs.net" 
+
+    - vm_hostname: "{{ inventory_hostname }}" 
+
+    - datacenter: "Noris" 
+
+    - source_template: "IT-Administrator-Template" 
+
+    - portgroup: "Julian" 
+
+    - ip_address: "{{ hostvars[inventory_hostname]['ansible_ssh_host'] }}" 
+
+    - netmask: "255.255.255.0" 
+
+    - dns_server: "10.0.30.20" 
+
+    - gateway: "10.5.13.1" 
+
+    - cluster: "Workload_Cluster" 
+
+ 
+
+  roles: 
+
+    - vcsa.clonevm 
+
+    - vm.installsoftware 
+
+    - vcsa.restapi
+   
+... 

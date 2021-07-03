@@ -1,0 +1,30 @@
+---
+# tasks file for vm.installsoftware
+  - name: Update APT Cache 
+
+    become_method: sudo 
+
+    apt: 
+
+      update_cache: no 
+
+      force_apt_get: yes 
+
+    delegate_to: "{{ inventory_hostname }}" 
+
+ 
+  - name: Ansible apt install packages 
+
+    become_method: sudo 
+
+    become: yes 
+
+    apt: 
+
+      name: ['vim', 'tree'] 
+
+      state: present 
+
+      update_cache: no 
+
+    delegate_to: "{{ inventory_hostname }}"

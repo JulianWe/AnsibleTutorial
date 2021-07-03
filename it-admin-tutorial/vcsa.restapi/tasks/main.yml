@@ -1,0 +1,29 @@
+---
+  - name: vCenter Login
+    no_log: yes
+    run_once: yes
+    uri:
+      url: "https://{{ vcenter_fqdn }}/rest/com/vmware/cis/session"
+      force_basic_auth: yes
+      method: POST
+      user: "{{ vc_username }}"
+      password: "{{ vc_password }}"
+      status_code: 200
+      validate_certs: no
+    register: vc_login
+    failed_when: vc_login.status != 200
+    delegate_to: localhost
+
+  - name: reboot vm via REST API
+    uri:
+      url: "https://{{ vcenter_fqdn }}/api/vcenter/vm/{{ clone_moids.instance.moid }}/guest/power?action=reboot"
+      method: POST
+      validate_certs: no
+      status_code: 204
+      headers:
+       Cookie: "{{ vc_login.set_cookie }}"
+    register: reboot
+
+
+    
+...

@@ -1,0 +1,30 @@
+  - name:  Clone a virtual machine from Linux template and customize
+    vmware_guest:
+      hostname: "{{ vcenter_fqdn }}"
+      username: "{{ vc_username }}"
+      password: "{{ vc_password }}"
+      validate_certs: no
+      datacenter: "{{ datacenter }}"
+      state: present
+      folder: /vm
+      template: "{{ source_template }}"
+      name: "{{ vm_hostname }}"
+      cluster: "{{ cluster }}"
+      networks:
+        - name: "{{ portgroup }}"
+          start_connected: true
+          connected: true
+          ip: "{{ ip_address  }}"
+          netmask: "{{ netmask  }}"
+          gateway: "{{ gateway }}"
+      wait_for_ip_address: True
+      customization:
+        hostname: "{{ vm_hostname }}"
+        domain: "{{ domain }}"
+        dns_servers:
+          - "{{ dns_server }}"
+        dns_suffix:
+          - "{{ domain }}"
+    delegate_to: localhost
+    register: clone_moids
+...
